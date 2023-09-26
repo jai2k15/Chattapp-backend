@@ -1,11 +1,11 @@
 const express = require('express');
 const app = express();
-const port = 8001;
 let cors = require('cors');
 const path = require('path')
 require('dotenv').config();
 const BASE_URL = process.env.BASE_URL;
 const DATABASE = process.env.DATABASE;
+const port = process.env.PORT || 8001;
 //imports
 // console.log(process.env.DATABASE)
 app.use(cors())
