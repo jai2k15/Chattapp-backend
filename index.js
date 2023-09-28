@@ -51,7 +51,11 @@ const server = app.listen(port, ()=>{
 const io = require('socket.io')(server, {
     
     cors:{
+<<<<<<< HEAD
         origin: `${BASE_URL}`,
+=======
+        origin: "https://socially-messaging.netlify.app",
+>>>>>>> c6dc98e7fe02da355e180bd98441117fb2505fb5
         allowedHeaders:["my-custom-header"],
         credentials: true
     }
