@@ -38,16 +38,6 @@ app.use('/api/user', userRouter)
 
 app.use('/api/friends', friendRouter)
 
-
-// ----------------deployement------------------
-// const __dirname1 = path.resolve();
-// app.use(express.static(path.join(__dirname,'../Client/dist')))
-
-// app.get('*', (req, res)=>{
-//   res.sendFile(path.resolve(__dirname1,"../", "Client", "dist", "index.html"))
-// })
-// ----------------deployement------------------
-
 app.get("/api", (req, res) => {
   res.json({message: "Hello"})
 });
@@ -61,7 +51,7 @@ const server = app.listen(port, ()=>{
 const io = require('socket.io')(server, {
     
     cors:{
-        origin: "http://127.0.0.1:5173",
+        origin: `${BASE_URL}`,
         allowedHeaders:["my-custom-header"],
         credentials: true
     }
@@ -94,7 +84,6 @@ io.on('connection', (socket)=>{
     }) 
 
     socket.on('disconnect', ()=>{
-        // io.in()
         onlineUsers = onlineUsers.filter((user)=> user.socketId != socket.id);
         io.emit('get_users', onlineUsers);
     });

@@ -14,7 +14,8 @@ const friendSchema = mongoose.Schema({
         
     },
     profilePic:{
-        type:String
+        type:String,
+        default: null
     },
     username:{
         type:String,

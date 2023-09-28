@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const upload = multer({ dest: '../uploads/' })
 const Friends = require('../models/friends');
+const User = require('../models/user')
 const { restrictToLoggedIn } = require('../middleware/auth')
 
 
@@ -10,7 +11,19 @@ router.get('/allFriends', restrictToLoggedIn, async (req, res) => {
     try{
 
         const friend = await Friends.find({ createdBy: req.user.id });
-        res.json({ friend })
+        const users = []
+        const f = await Promise.all(friend.map( async (f)=>{
+
+            // console.log(f)
+            const user = await User.findOne({ username: f.username })
+            return user;
+            // // console.log(user)
+            // // console.log(users)
+            // res.json({users})
+            // return users;
+        }))
+        // console.log(f);
+        res.json({ f })
     }catch(err){
           console.log(err)
     }
@@ -26,6 +39,7 @@ router.post('/addFriend', restrictToLoggedIn, async (req, res) => {
             username: req.body.username,
             dob: req.body.dob,
             gender: req.body.gender,
+            profilePic: req.body.profilePic,
             createdBy: req.user.id
         })
         console.log(friend);
